@@ -6,7 +6,7 @@ app.get('/', function (req, res) {
 })
 
 app.post('/TDNchat', function (req, res) {
-    res.send("asd")
+    res.send(200)
     console.log(res)
 })
 
