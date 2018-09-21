@@ -21,8 +21,9 @@ app.get('/', function (req, res) {
 
 app.post('/TDNchat', function (req, res) {
     res.sendStatus(200)
+    console.log("-----------------------------------")
     console.log("Receive request")
-    console.log(req.body)
+    //console.log(req.body)
     if(req.body.handle_token == "02sr4KvZJ4VECgsMTerD4eMJpUlJ3DVa"){
       console.log("Token: true")
       handler.handle(req.body.name, req.body.senderID.toString(), req.body.msg, req.body.gender)
