@@ -88,7 +88,7 @@ function pairUser(usrA,usrB){
             if(err) reject(err)
             user.updateOne({"_id":usrB},{$set: {"status": 2,"connect":usrA}},(err)=>{
                 if(err) reject(err)
-                return Promise.all([Chatfuel.send(usrA,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text"),Chatfuel.send(usrB,'Đã ghép cặp! Cú pháp "exit!" để dừng trò chuyện',"text")]).then((res)=>{resolve(res)}).catch(err=>{throw err})
+                return Promise.all([Chatfuel.send(usrA,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text"),Chatfuel.send(usrB,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text")]).then((res)=>{resolve(res)}).catch(err=>{throw err})
             })
         })    
     })
