@@ -11,10 +11,10 @@
     "mongodb": "^3.1.6",
     "mongodb-queue": "^3.1.0",
     "queue": "^4.5.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
-    "jshint": "^2.9.6",
     "nodemon": "^1.18.4"
   },
   "scripts": {

@@ -10,7 +10,7 @@ async function handle(name, senderID, msg, gender){
         if(msg.toLowerCase() == "bắt đầu"){
             queryUser.checkQueue(query._id).then(()=>{}).catch(err=>{throw err})
         }else{
-            Chatfuel.send(query._id,'hãy gửi cú pháp "bắt đầu" để trò chuyện',"text")
+            Chatfuel.send(query._id,'Hãy gửi cú pháp "bắt đầu" để trò chuyện',"text").then(res=>{console.log("sent")}).catch(err => {console.error(err)})
         }
     }
     if(query.status == 1) Chatfuel.send(query._id,"Đang tìm kiếm, bạn hãy chờ tí nhé!","text")
