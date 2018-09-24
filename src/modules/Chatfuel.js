@@ -30,7 +30,7 @@ function send(senderID, msg, type){
                     "reply": "Hệ thống không cho phép đối phương gửi ảnh"
                 }
                 break;
-        }    
+        }
         axios
         .post(
             `https://api.chatfuel.com/bots/${
@@ -46,12 +46,13 @@ function send(senderID, msg, type){
             }`, payload
         )
         .then(res => {
-            console.log("sent!")
             console.timeEnd('axios')
             console.timeEnd(global.all)
             resolve(res)
         })
         .catch(err => {
+            console.timeEnd('axios')
+            console.timeEnd(global.all)
             reject(err)
         })
     })

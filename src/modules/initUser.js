@@ -5,6 +5,7 @@ function checkUser(name,senderID,gender){
         console.log("Checking cache")
         var connectID = cache.get(senderID)
         if(connectID != null){
+            console.log("Cache found!")
             resolve({
                 "status": 2,
                 "_id": senderID,
@@ -12,6 +13,7 @@ function checkUser(name,senderID,gender){
             })
         }
         else{
+            console.log("Checking database")
             var user = global.db.user
             user.findOne({'_id': senderID}, (err,res)=>{
                 if(err) reject(err)
