@@ -1,5 +1,6 @@
 var mongoDBQueue = require('mongodb-queue')
 var Chatfuel = require('./Chatfuel')
+var cache = require('memory-cache')
 
 function checkQueue(senderID){
     return new Promise((resolve,reject)=>{
@@ -9,13 +10,15 @@ function checkQueue(senderID){
         var queueDB = global.db.collection("QueueUser")
         //check available
         queueDB.findOne({"payload":senderID},(err,obj)=>{
-            console.log("objecttttt:",obj)
+            if(err) reject(err)
+            console.log("objecttt:",obj)
             if(obj == null){
                 qu.add(senderID,(err,id)=>{
+                    if(err) reject(err)
                     console.log("Inserted",id)
-                    user.updateOne({"_id":senderID},{$set: {"status": 1,"connect":""}},err=>{statusQueue(senderID)})
+                    user.updateOne({"_id":senderID},{$set: {"status": 1,"connect":""}},err=>{statusQueue(senderID).then(()=>{}).catch(err=>{console.error(err)})})
                 })
-            }else statusQueue(senderID)
+            }else statusQueue(senderID).then(()=>{}).catch(err=>{console.error(err)})
         })
     })
 }
@@ -57,6 +60,8 @@ function pairUser(usrA,usrB){
     console.log("userA",usrA)
     console.log("userB",usrB)
     return new Promise((resolve,reject)=>{
+        cache.put(usrA,usrB)
+        cache.put(usrB,usrA)
         var user = global.db.user
         user.updateOne({"_id":usrA},{$set: {"status": 2,"connect":usrB}},(err)=>{
             if(err) reject(err)
@@ -72,6 +77,8 @@ function unpair(sender){
     return new Promise((resolve,reject)=>{
         var usrA = sender._id
         var usrB = sender.connect
+        cache.del(usrA)
+        cache.del(usrB)
         var user = global.db.user
         user.updateOne({"_id":usrA},{$set: {"status": 0,"connect":""}},err=>{
             if(err) reject(err)

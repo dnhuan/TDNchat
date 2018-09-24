@@ -9,7 +9,7 @@ async function handle(name, senderID, msg, gender){
     //status 0-free, 1-pending, 2-paired
     if(query.status == 0){
         if(msg.toLowerCase() == "bắt đầu"){
-            queryUser.checkQueue(query._id).then(()=>{}).catch(err=>{console.erroR(err)})
+            queryUser.checkQueue(query._id).then(()=>{}).catch(err=>{console.error(err)})
         }else{
             Chatfuel.send(query._id,'Hãy gửi cú pháp "bắt đầu" để trò chuyện',"text").then(()=>{}).catch(err => {console.error(err)})
         }
