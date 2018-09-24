@@ -2,8 +2,9 @@ var axios = require('axios')
 var url = require('url')
 
 function send(senderID, msg, type){
-    console.log(senderID,msg,type)
+    console.log(senderID,msg)
     return new Promise((resolve,reject) => {
+        console.time('axios')
         switch(msgType(msg)){
             case "text":
                 var block_id = process.env.block_text
@@ -44,7 +45,12 @@ function send(senderID, msg, type){
             process.env.CHATFUEL_MESSAGE_TAG
             }`, payload
         )
-        .then(res => resolve(res))
+        .then(res => {
+            console.log("sent!")
+            console.timeEnd('axios')
+            console.timeEnd(global.all)
+            resolve(res)
+        })
         .catch(err => {
             reject(err)
         })

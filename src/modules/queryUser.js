@@ -1,31 +1,6 @@
 var mongoDBQueue = require('mongodb-queue')
 var Chatfuel = require('./Chatfuel')
 
-function checkUser(name,senderID,gender){
-    return new Promise((resolve,reject) =>{
-        var user = global.db.user
-        user.findOne({'_id': senderID}, (err,res)=>{
-            if(err) reject(err)
-            if(res == null){
-                console.log("Insert:",senderID)
-                res = {
-                    "_id":  senderID,
-                    "name": name,
-                    "gender": gender,
-                    "status": 0,
-                    "connect": "",
-                    "chatID": ""
-                }
-                user.insertOne(res,(err,sta) => {
-                    if(err) throw err
-                    resolve(res)
-                } )
-            }
-            else resolve(res)
-        })
-    })
-}
-
 function checkQueue(senderID){
     return new Promise((resolve,reject)=>{
         console.log("Checking queue")
@@ -61,7 +36,6 @@ function statusQueue(senderID){
                             queueDB.deleteOne({"payload":usrB.payload},err=>{
                                 if(err) reject(err)
                                 pairUser(usrA.payload,usrB.payload).then((sol)=>{
-                                        console.log(sol)
                                         resolve({
                                             "status": "Paired",
                                             "usrA": usrA,
@@ -88,7 +62,7 @@ function pairUser(usrA,usrB){
             if(err) reject(err)
             user.updateOne({"_id":usrB},{$set: {"status": 2,"connect":usrA}},(err)=>{
                 if(err) reject(err)
-                return Promise.all([Chatfuel.send(usrA,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text"),Chatfuel.send(usrB,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text")]).then((res)=>{resolve(res)}).catch(err=>{throw err})
+                return Promise.all([Chatfuel.send(usrA,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text"),Chatfuel.send(usrB,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text")]).then((res)=>{resolve(res)}).catch(err=>{console.error(err)})
             })
         })    
     })
@@ -110,7 +84,6 @@ function unpair(sender){
 }
 
 module.exports = {
-    checkUser,
     checkQueue,
     unpair
 }
