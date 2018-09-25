@@ -44,13 +44,13 @@ function statusQueue(senderID){
                                             "usrA": usrA,
                                             "usrB": usrB
                                         })
-                                    }).catch((err)=>{throw err})
+                                    }).catch((err)=>{console.error(err)})
                         })
                     })
                 })
             })}
             else{
-                Chatfuel.send(senderID,"Đang tìm kiếm, bạn vui lòng chờ tí nhé!","text").then(()=>{resolve({"status":"Queuing"})}).catch((err)=>{throw err})
+                Chatfuel.send(senderID,"Đang tìm kiếm, bạn vui lòng chờ tí nhé!","text").then(()=>{resolve({"status":"Queuing"})}).catch((err)=>{console.error(err)})
             }
         })
     })
@@ -84,7 +84,7 @@ function unpair(sender){
             if(err) reject(err)
             user.updateOne({"_id":usrB},{$set: {"status": 0,"connect":""}},err=>{
                 if(err) reject(err)
-                return Promise.all([Chatfuel.send(usrA,"Đã ngắt kết nối với đối phương","text"),Chatfuel.send(usrB,"Đã ngắt kết nối với đối phương","text")]).then((res)=>{resolve(res)}).catch(err=>{throw err})
+                return Promise.all([Chatfuel.send(usrA,"Đã ngắt kết nối với đối phương","text"),Chatfuel.send(usrB,"Đã ngắt kết nối với đối phương","text")]).then((res)=>{resolve(res)}).catch(err=>{console.error(err)})
             })
         })
     })

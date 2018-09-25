@@ -28,7 +28,7 @@ function checkUser(name,senderID,gender){
                         "chatID": ""
                     }
                     user.insertOne(res,(err,sta) => {
-                        if(err) throw err
+                        if(err) console.error(err)
                         resolve(res)
                     } )
                 }else{
