@@ -7,48 +7,39 @@ function send(senderID, msg, type){
         console.time('axios')
         switch(msgType(msg)){
             case "text":
-                var block_id = process.env.block_text
                 var payload = {
+                    "sender":senderID,
                     "reply": msg
                 }
                 break;
             case "image":
-                var block_id = process.env.block_image
                 var payload = {
+                    "sender":senderID,
                     "imageURL": msg
                 }
                 break;
             case "audio":
-                var block_id = process.env.block_audio
                 var payload = {
+                    "sender":senderID,
                     "audioURL": msg
                 }
                 break;
             case "invalid":
-                var block_id = process.env.block_text
                 var payload = {
+                    "sender":senderID,
                     "reply": "Hệ thống không cho phép đối phương gửi ảnh"
                 }
                 break;
         }
+        var baseUrl = "http://localhost:712/GoAxios"
         axios
         .post(
-            `https://api.chatfuel.com/bots/${
-            process.env.BOT_ID
-            }/users/${
-            senderID
-            }/send?chatfuel_token=${
-            process.env.chatfuel_token
-            }&chatfuel_block_id=${
-            block_id
-            }&CHATFUEL_MESSAGE_TAG=${
-            process.env.CHATFUEL_MESSAGE_TAG
-            }`, payload
+            baseUrl, payload
         )
         .then(res => {
             console.timeEnd('axios')
             console.timeEnd(global.all)
-            resolve(res)
+            resolve(true)
         })
         .catch(err => {
             console.timeEnd('axios')

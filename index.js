@@ -13,51 +13,21 @@ MongoClient.connect(process.env.MongoURL,{ useNewUrlParser: true }, function(err
   global.db = db.db("TDNchat")
   global.db.user = global.db.collection("User")
   global.db.queueDB = global.db.collection("QueueUser")
-  //
-  app.use(bodyparser.json())
-  app.use(bodyparser.urlencoded({ extended: true }))
-
-  app.get('/', function (req, res) {
-    res.send('Hello World')
-  })
-  app.post('/TDNchat', function (req, res) {
-      global.all = 'all'
-      console.time(global.all)
-      console.log("-----------------------------------")
-      //console.log(req.body)
-      if(req.body.handle_token == "02sr4KvZJ4VECgsMTerD4eMJpUlJ3DVa"){
-        handler.handle(req.body.name, req.body.senderID.toString(), req.body.msg, req.body.gender)
-      }
-  })
-  app.get('/audio',(req,res)=>{
-    res.json({
-      "messages": [
-        {
-          "attachment": {
-            "type": "audio",
-            "payload": {
-              "url": req.query.audioURL
-            }
-          }
-        }
-      ]
-    })
-  })
-  //
-  app.get('/image',(req,res)=>{
-    res.json({
-      "messages": [
-        {
-          "attachment": {
-            "type": "image",
-            "payload": {
-              "url": req.query.imageURL
-            }
-          }
-        }
-      ]
-    })
-  })
-  //
-  app.listen(process.env.APP_PORT)
 })
+
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({ extended: true }))
+
+app.get('/', function (req, res) {
+  res.send('Hello World')
+})
+app.post('/TDNchat', function (req, res) {
+    global.all = 'all'
+    console.time(global.all)
+    console.log("-----------------------------------")
+    //console.log(req.body)
+    if(req.body.handle_token == "02sr4KvZJ4VECgsMTerD4eMJpUlJ3DVa"){
+      handler.handle(req.body.name, req.body.senderID.toString(), req.body.msg, req.body.gender)
+    }
+})
+app.listen(process.env.APP_PORT)
