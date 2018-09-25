@@ -4,7 +4,6 @@ var url = require('url')
 function send(senderID, msg, type){
     console.log(senderID,msg)
     return new Promise((resolve,reject) => {
-        console.time('axios')
         switch(msgType(msg)){
             case "text":
                 var block_id = process.env.block_text
@@ -46,13 +45,9 @@ function send(senderID, msg, type){
             }`, payload
         )
         .then(res => {
-            console.timeEnd('axios')
-            console.timeEnd(global.all)
             resolve(res)
         })
         .catch(err => {
-            console.timeEnd('axios')
-            console.timeEnd(global.all)
             reject(err)
         })
     })

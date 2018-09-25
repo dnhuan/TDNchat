@@ -21,8 +21,6 @@ MongoClient.connect(process.env.MongoURL,{ useNewUrlParser: true }, function(err
     res.send('Hello World')
   })
   app.post('/TDNchat', function (req, res) {
-      global.all = 'all'
-      console.time(global.all)
       console.log("-----------------------------------")
       //console.log(req.body)
       if(req.body.handle_token == "02sr4KvZJ4VECgsMTerD4eMJpUlJ3DVa"){

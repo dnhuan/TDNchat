@@ -28,7 +28,7 @@ function statusQueue(senderID){
         var qu = mongoDBQueue(global.db,'QueueUser')
         var queueDB = global.db.queueDB
         qu.size((err,qsize)=>{
-            if(qsize >= 2){
+            while(qsize >= 2){
                 //select
                 qu.get((err, usrA)=>{
                     if(err) reject(err)
@@ -44,12 +44,12 @@ function statusQueue(senderID){
                                             "usrA": usrA,
                                             "usrB": usrB
                                         })
-                                    }).catch((err)=>{throw err})
+                                    }).catch((err)=>{console.error(err)})
                         })
                     })
                 })
             })}
-            else{
+            if(qsize <= 1){
                 Chatfuel.send(senderID,"Đang tìm kiếm, bạn vui lòng chờ tí nhé!","text").then(()=>{resolve({"status":"Queuing"})}).catch((err)=>{throw err})
             }
         })
