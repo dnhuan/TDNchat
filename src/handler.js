@@ -23,6 +23,10 @@ async function handle(name, senderID, msg, gender){
             Chatfuel.send(query.connect,msg,"text").then(()=>{}).catch(err => {console.error(err)})
         }
     }
+    if(query.status == 3){
+            //Khoa tai khoan
+            Chatfuel.send(query._id,"Admin ghét bạn nên đã cho bạn ra đảo chơi với khỉ! Bye bye","text").then(()=>{}).catch(err => {console.error(err)})
+    }
 }
 
 module.exports = {
