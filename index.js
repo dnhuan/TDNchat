@@ -17,9 +17,22 @@ MongoClient.connect(process.env.MongoURL,{ useNewUrlParser: true }, function(err
   app.use(bodyparser.json())
   app.use(bodyparser.urlencoded({ extended: true }))
 
-  app.get('/', function (req, res) {
-    res.send('Hello World')
+  app.post('/TEST', function (req, res) {
+    res.sendStatus(200);
+    console.log("-----------------------------------")
+    var msg = req.body.entry[0].messaging[0];
+    console.log("Recieved from:",msg.sender.id)
+    if(msg.message.text!=undefined){
+      console.log(req.body.entry[0].messaging[0].message.text)
+      msg.message.type = "text"
+    }
+    else{
+      console.log(req.body.entry[0].messaging[0].message.attachments)
+      msg.message.type = "media"
+    }
+    handler.handle("", msg.sender.id.toString(), msg.message, "")
   })
+  //
   app.post('/TDNchat', function (req, res) {
       console.log("-----------------------------------")
       //console.log(req.body)

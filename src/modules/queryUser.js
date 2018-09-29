@@ -1,5 +1,5 @@
 var mongoDBQueue = require('mongodb-queue')
-var Chatfuel = require('./Chatfuel')
+var Chatfuel = require('../API/Chatfuel')
 var cache = require('memory-cache')
 
 function checkQueue(senderID){

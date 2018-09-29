@@ -1,4 +1,4 @@
-var Chatfuel = require('./modules/Chatfuel')
+var Chatfuel = require('./API/Chatfuel')
 var queryUser = require('./modules/queryUser')
 var initUser = require('./modules/initUser')
 
