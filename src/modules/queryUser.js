@@ -16,9 +16,9 @@ function checkQueue(senderID){
                 qu.add(senderID,(err,id)=>{
                     if(err) reject(err)
                     console.log("Inserted",id)
-                    user.updateOne({"_id":senderID},{$set: {"status": 1,"connect":""}},err=>{statusQueue(senderID).then(()=>{}).catch(err=>{console.error(err)})})
+                    user.updateOne({"_id":senderID},{$set: {"status": 1,"connect":""}},()=>{statusQueue(senderID).then(()=>{resolve(true)}).catch(err=>{console.error(err)})})
                 })
-            }else statusQueue(senderID).then(()=>{}).catch(err=>{console.error(err)})
+            }else statusQueue(senderID).then(()=>{resolve(true)}).catch(err=>{console.error(err)})
         })
     })
 }
