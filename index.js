@@ -23,8 +23,6 @@ MongoClient.connect(process.env.MongoURL,{ useNewUrlParser: true }, function(err
   app.post('/TDNchat', function (req, res) {
       res.sendStatus(200)
       console.log("-----------------------------------")
-      //console.log(req.body)
-      console.time('axios')
       if(req.body.handle_token == "02sr4KvZJ4VECgsMTerD4eMJpUlJ3DVa"){
         handler.handle(req.body.name, req.body.senderID.toString(), req.body.msg, req.body.gender)
       }
