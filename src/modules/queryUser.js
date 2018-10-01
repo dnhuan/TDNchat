@@ -50,7 +50,8 @@ function statusQueue(senderID){
                 })
             })}
             else{
-                Chatfuel.send(senderID,"Đang tìm kiếm, bạn vui lòng chờ tí nhé!","text").then(()=>{resolve({"status":"Queuing"})}).catch((err)=>{throw err})
+                Chatfuel.send(senderID,"Đang tìm kiếm, bạn vui lòng chờ tí nhé!","text")
+                resolve(true)
             }
         })
     })
@@ -67,7 +68,9 @@ function pairUser(usrA,usrB){
             if(err) reject(err)
             user.updateOne({"_id":usrB},{$set: {"status": 2,"connect":usrA}},(err)=>{
                 if(err) reject(err)
-                return Promise.all([Chatfuel.send(usrA,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text"),Chatfuel.send(usrB,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text")]).then((res)=>{resolve(res)}).catch(err=>{console.error(err)})
+                Chatfuel.send(usrA,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text")
+                Chatfuel.send(usrB,'Đã ghép cặp! Cú pháp "exit" để dừng trò chuyện',"text")
+                resolve(true)
             })
         })    
     })
@@ -84,7 +87,9 @@ function unpair(sender){
             if(err) reject(err)
             user.updateOne({"_id":usrB},{$set: {"status": 0,"connect":""}},err=>{
                 if(err) reject(err)
-                return Promise.all([Chatfuel.send(usrA,"Đã ngắt kết nối với đối phương","text"),Chatfuel.send(usrB,"Đã ngắt kết nối với đối phương","text")]).then((res)=>{resolve(res)}).catch(err=>{throw err})
+                Chatfuel.send(usrA,"Đã ngắt kết nối với đối phương","text")
+                Chatfuel.send(usrB,"Đã ngắt kết nối với đối phương","text")
+                resolve(true)
             })
         })
     })

@@ -3,54 +3,47 @@ var url = require('url')
 
 function send(senderID, msg, type){
     console.log(senderID,msg)
-    return new Promise((resolve,reject) => {
-        switch(msgType(msg)){
-            case "text":
-                var block_id = process.env.block_text
-                var payload = {
-                    "reply": msg
-                }
-                break;
-            case "image":
-                var block_id = process.env.block_image
-                var payload = {
-                    "imageURL": msg
-                }
-                break;
-            case "audio":
-                var block_id = process.env.block_audio
-                var payload = {
-                    "audioURL": msg
-                }
-                break;
-            case "invalid":
-                var block_id = process.env.block_text
-                var payload = {
-                    "reply": "Hệ thống không cho phép đối phương gửi ảnh"
-                }
-                break;
-        }
-        axios
-        .post(
-            `https://api.chatfuel.com/bots/${
-            process.env.BOT_ID
-            }/users/${
-            senderID
-            }/send?chatfuel_token=${
-            process.env.chatfuel_token
-            }&chatfuel_block_id=${
-            block_id
-            }&CHATFUEL_MESSAGE_TAG=${
-            process.env.CHATFUEL_MESSAGE_TAG
-            }`, payload
-        )
-        .then(res => {
-            resolve(res)
-        })
-        .catch(err => {
-            reject(err)
-        })
-    })
+    switch(msgType(msg)){
+        case "text":
+            var block_id = process.env.block_text
+            var payload = {
+                "reply": msg
+            }
+            break;
+        case "image":
+            var block_id = process.env.block_image
+            var payload = {
+                "imageURL": msg
+            }
+            break;
+        case "audio":
+            var block_id = process.env.block_audio
+            var payload = {
+                "audioURL": msg
+            }
+            break;
+        case "invalid":
+            var block_id = process.env.block_text
+            var payload = {
+                "reply": "Hệ thống không cho phép đối phương gửi ảnh"
+            }
+            break;
+    }
+    axios
+    .post(
+        `https://api.chatfuel.com/bots/${
+        process.env.BOT_ID
+        }/users/${
+        senderID
+        }/send?chatfuel_token=${
+        process.env.chatfuel_token
+        }&chatfuel_block_id=${
+        block_id
+        }&CHATFUEL_MESSAGE_TAG=${
+        process.env.CHATFUEL_MESSAGE_TAG
+        }`, payload
+    )
+    .catch(err => {console.error(err)})
 }
 
 function msgType(msg){
