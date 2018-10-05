@@ -8,6 +8,7 @@ async function handle(name, senderID, msg, gender){
     var query = await initUser.checkUser(name,senderID,gender).then(obj=>{return obj}).catch((err)=>{console.error(err)})
     //status 0-free, 1-pending, 2-paired
     if(query.status == 0){
+        console.log(msg.toLowerCase())
         if(msg.toLowerCase() == "bắt đầu"){
             queryUser.checkQueue(query._id).then(()=>{}).catch(err=>{console.error(err)})
         }else{
