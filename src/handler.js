@@ -17,7 +17,7 @@ async function handle(name, senderID, msg, gender){
     }
     if(query.status == 1) Chatfuel.send(query._id,"Đang tìm kiếm, bạn hãy chờ tí nhé!","text")
     if(query.status == 2){
-        if(msg.toLowerCase() == "exit"){
+        if(msg.toString().toLowerCase() == "exit"){
                 queryUser.unpair(query).then(()=>{}).catch(err=>{console.error(err)})
         }else{
             //forward msg
