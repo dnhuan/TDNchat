@@ -3,7 +3,7 @@ var queryUser = require('./modules/queryUser')
 var initUser = require('./modules/initUser')
 
 async function handle(name, senderID, msg, gender){
-    console.log("Start handler:",name,senderID)
+    console.log("Bat dau:",name,senderID)
     //check db
     var query = await initUser.checkUser(name,senderID,gender).then(obj=>{return obj}).catch((err)=>{console.error(err)})
     //status 0-free, 1-pending, 2-paired
